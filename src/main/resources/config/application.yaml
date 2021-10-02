@@ -1,0 +1,9 @@
+spring:
+  main:
+    web-application-type: none
+
+example:
+  validation:
+    hi: hello
+
+logging.level.org.springframework: DEBUG
