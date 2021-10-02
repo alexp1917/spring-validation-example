@@ -6,4 +6,5 @@ example:
   validation:
     hi: hello
 
-logging.level.org.springframework: DEBUG
+# probably not necessary for normal configuration after autowiring figured out
+#logging.level.org.springframework: DEBUG

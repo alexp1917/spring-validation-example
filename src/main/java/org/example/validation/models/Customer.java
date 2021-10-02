@@ -9,7 +9,7 @@ import java.util.UUID;
 @Data
 public class Customer {
 
-    @NotNull
+    @NotNull(message = "Customer.id must not be null")
     private UUID id;
 
     private int age;

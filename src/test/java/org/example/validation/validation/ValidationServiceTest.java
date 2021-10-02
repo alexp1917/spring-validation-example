@@ -33,6 +33,8 @@ class ValidationServiceTest {
 
         assertThat(validationException.getMessage(), is(notNullValue()));
         log.info("message when blank id: {}", validationException.getMessage());
+        assertThat(validationException.getMessage(),
+                is("Customer.id must not be null"));
     }
 
 }
