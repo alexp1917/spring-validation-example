@@ -1,28 +1,20 @@
 package org.example.validation.validation;
 
 import lombok.extern.slf4j.Slf4j;
-import org.example.validation.Application;
+import org.example.validation.models.Customer;
 import org.junit.jupiter.api.Test;
-import org.junit.jupiter.api.extension.ExtendWith;
-import org.springframework.beans.BeansException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
-import org.springframework.context.ApplicationContext;
-import org.springframework.test.context.junit.jupiter.SpringExtension;
 
-import javax.xml.validation.Validator;
+import static org.hamcrest.MatcherAssert.assertThat;
+import static org.hamcrest.Matchers.is;
+import static org.hamcrest.Matchers.notNullValue;
+import static org.junit.jupiter.api.Assertions.assertThrows;
 
 
 @Slf4j
-@SpringBootTest(/*classes = Application.class*/)
-// @ExtendWith(SpringExtension.class)
+@SpringBootTest()
 class ValidationServiceTest {
-
-    @Autowired
-    ApplicationContext applicationContext;
-
-    @Autowired(required = false)
-    Validator defaultValidator;
 
     @Autowired
     ValidationService validationService;
@@ -33,17 +25,14 @@ class ValidationServiceTest {
     }
 
     @Test
-    public void test() {
-        System.out.println(defaultValidator);
+    public void test_blankThrows() {
+        Customer blankId = new Customer();
+        ValidationService.ValidationException validationException =
+                assertThrows(ValidationService.ValidationException.class,
+                        () -> validationService.validate(blankId));
 
-        try {
-            Validator bean = applicationContext.getAutowireCapableBeanFactory()
-                    .getBean(Validator.class);
-            log.debug("bean {}", bean);
-        } catch (BeansException | IllegalStateException e) {
-            e.printStackTrace();
-        }
-
+        assertThat(validationException.getMessage(), is(notNullValue()));
+        log.info("message when blank id: {}", validationException.getMessage());
     }
 
 }
